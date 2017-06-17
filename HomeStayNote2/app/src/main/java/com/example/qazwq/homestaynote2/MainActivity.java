@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TimePicker timePicker=$(R.id.timePicker);
         setContentView(R.layout.activity_main);
         a=new Intent(this,MyService.class);
         button=(Button)findViewById(R.id.button2);
