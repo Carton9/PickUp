@@ -31,7 +31,12 @@
 
         <activity android:name=".StudentSignIn" />
         <activity android:name=".StudentList" />
-        <activity android:name=".EventSetting"></activity>
+        <activity android:name=".EventSetting" />
+        <activity
+            android:name=".MainPanel"
+            android:label="@string/title_activity_main_panel"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EventList"></activity>
     </application>
 
 </manifest>
