@@ -1,4 +1,4 @@
-package DataStroge;
+package com.example.qazwq.homestaynote2;
 
 import java.io.Serializable;
 import java.sql.Time;

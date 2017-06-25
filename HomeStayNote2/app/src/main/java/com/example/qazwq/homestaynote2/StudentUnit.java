@@ -1,4 +1,4 @@
-package DataStroge;
+package com.example.qazwq.homestaynote2;
 
 import java.io.Serializable;
 
@@ -12,4 +12,6 @@ public class StudentUnit implements Serializable {
     String location;
     String phone;
     String email;
+    boolean s1;
+    boolean s2;
 }

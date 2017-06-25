@@ -15,14 +15,19 @@ import android.view.MenuItem;
 
 public class MainPanel extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    PanelController controller;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_panel);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);;;;
+        ;
         setSupportActionBar(toolbar);
-
+         controller=PanelController.getStaticController(new View[]{
+                (View)findViewById(R.id.event_list),
+                (View)findViewById(R.id.event_setting),
+                (View)findViewById(R.id.student_list),
+                (View)findViewById(R.id.sign_in)});
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -57,11 +62,11 @@ public class MainPanel extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        /*noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
+        */
         return super.onOptionsItemSelected(item);
     }
 

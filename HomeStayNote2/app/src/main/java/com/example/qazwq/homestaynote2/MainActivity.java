@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         TimePicker timePicker=$(R.id.timePicker);
         setContentView(R.layout.activity_main);
+        Intent c=new Intent(this,MainPanel.class);
+        this.startActivity(c);
         a=new Intent(this,MyService.class);
         button=(Button)findViewById(R.id.button2);
         TextView text=$(R.id.textView2);

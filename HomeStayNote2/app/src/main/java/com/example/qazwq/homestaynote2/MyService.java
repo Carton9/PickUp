@@ -98,6 +98,7 @@ public class MyService extends Service {
             // for ActivityCompat#requestPermissions for more details.
             sendText("Fail to access GPS");
             stopSelf();
+            mNotificationManager.cancel(iD);
             return;
         }
         sendText("GPS active");
@@ -192,6 +193,7 @@ public class MyService extends Service {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             sendText("Fail to access GPS");
+            mNotificationManager.cancel(iD);
             return;
         }
         locationManager.removeUpdates(locationListener);

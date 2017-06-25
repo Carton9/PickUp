@@ -46,7 +46,7 @@
                     android:inputType="textPersonName"
                     android:text="Name"
                     android:ems="10"
-                    android:id="@+id/editText8" />
+                    android:id="@+id/student_name" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -57,14 +57,14 @@
                         android:text="Male"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/checkBox2"
+                        android:id="@+id/check_male"
                         android:layout_weight="1" />
 
                     <CheckBox
                         android:text="Female"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/checkBox"
+                        android:id="@+id/check_female"
                         android:layout_weight="1" />
                 </LinearLayout>
 
@@ -74,7 +74,7 @@
                     android:inputType="textPersonName"
                     android:text="Location"
                     android:ems="10"
-                    android:id="@+id/editText7" />
+                    android:id="@+id/student_location" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                     android:inputType="textPersonName"
                     android:text="E-mail"
                     android:ems="10"
-                    android:id="@+id/editText6" />
+                    android:id="@+id/student_email" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                     android:inputType="textPersonName"
                     android:text="Phone Number"
                     android:ems="10"
-                    android:id="@+id/editText5" />
+                    android:id="@+id/student_phone" />
 
                 <Switch
                     android:text="Switch"
