@@ -75,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+    @Override
+    protected void onResume() {
+        //Intent c=new Intent(this,MainPanel.class);
+        //this.startActivity(c);
+        super.onResume();
+    }
     private <T extends View> T $(int resId) {
         return (T) super.findViewById(resId);
     }

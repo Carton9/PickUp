@@ -37,6 +37,9 @@
             android:label="@string/title_activity_main_panel"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".EventList"></activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDq-ClyOQ2BTv-ok-dYbiFafe5aAtHKJ5Y"/>
     </application>
 
 </manifest>

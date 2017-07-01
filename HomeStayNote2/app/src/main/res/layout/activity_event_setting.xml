@@ -10,102 +10,132 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.qazwq.homestaynote2.EventSetting">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
-
-        <TextView
-            android:text="Name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView6"
-            android:textSize="20sp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/eventName" />
-
-        <TextView
-            android:text="Date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:textSize="20sp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            <Spinner
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/month"
-                android:layout_weight="1" />
+                android:layout_height="match_parent">
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/day"
-                android:layout_weight="1" />
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:text="Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView6"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:id="@+id/event_name" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="Date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView3"
+                            android:textSize="20sp"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:text="Button"
+                            android:layout_width="191dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/date_picker" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="Time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView5"
+                            android:textSize="20sp"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:text="Button"
+                            android:layout_width="191dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/time_picker" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:text="Location"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView4"
+                            android:textSize="20sp"
+                            android:layout_weight="1" />
+
+                        <Button
+                            android:text="Button"
+                            android:layout_width="190dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/event_location" />
+
+                    </LinearLayout>
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="262dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:text="TextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/event_discribtion" />
+                        </LinearLayout>
+                    </ScrollView>
+
+                    <Button
+                        android:text="@android:string/VideoView_error_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/finish"
+                        android:layout_weight="1"
+                        />
+
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
-
-        <TextView
-            android:text="Time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView5"
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/hour"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/minter"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <TextView
-            android:text="Location"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView4"
-            android:textSize="20sp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/location" />
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/spinner5" />
-
-        <Button
-            android:text="@android:string/VideoView_error_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/finish" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
