@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -27,6 +29,8 @@ public class MainPanel extends AppCompatActivity
     final int STUDENTLOCATION=876545;
     PanelController controller;
     PanelUpdate updater;
+    Boolean eventSelect;
+    Boolean studentSelect;
     StudentUnit currentStudent;
     StudentListData currentStudentList;
     EventUnit currentEvent;
@@ -65,9 +69,10 @@ public class MainPanel extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_panel);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);;;;
-        ;
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        studentSelect=false;
+        eventSelect=false;
          controller=PanelController.getStaticController(new View[]{
                 (View)findViewById(R.id.event_list),
                 (View)findViewById(R.id.event_setting),
@@ -75,6 +80,7 @@ public class MainPanel extends AppCompatActivity
                 (View)findViewById(R.id.sign_in)});
         updater=PanelUpdate.getStaticUpdate(controller,this);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.findViewById(R.id.nav_Student);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -107,13 +113,52 @@ public class MainPanel extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        if (id == R.id.add_student) {
+            controller.changeView(PanelController.Display.StudentSignIn,null);
+            return true;
+        }
+        if (id == R.id.add_event) {
+            controller.changeView(PanelController.Display.EventSetting,null);
+            return true;
+        }
+        if (id == R.id.edit_student) {
+            controller.changeView(PanelController.Display.StudentSignIn,null);
+            return true;
+        }
         /*noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
         */
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem addEvent = menu.findItem(R.id.add_event);
+        MenuItem addStudent=menu.findItem(R.id.add_student);
+        MenuItem deleteEvent = menu.findItem(R.id.delete_event);
+        MenuItem deleteStudent=menu.findItem(R.id.delete_student);
+        MenuItem editEvent = menu.findItem(R.id.edit_event);
+        MenuItem editStudent=menu.findItem(R.id.edit_student);
+        addEvent.setVisible(false);
+        addStudent.setVisible(false);
+        deleteEvent.setVisible(false);
+        deleteStudent.setVisible(false);
+        editEvent.setVisible(false);
+        editStudent.setVisible(false);
+        if(studentSelect){
+            addStudent.setVisible(true);
+            deleteStudent.setVisible(true);
+            editStudent.setVisible(true);
+        }
+        if(eventSelect){
+            addEvent.setVisible(true);
+            deleteEvent.setVisible(true);
+            editEvent.setVisible(true);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -121,24 +166,36 @@ public class MainPanel extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-/*
+        Toast.makeText(getApplicationContext(), "进入",
+                Toast.LENGTH_SHORT).show();
+        if(id==R.id.nav_Student){
+            studentSelect=true;
+            eventSelect=false;
+            getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+            controller.changeView(PanelController.Display.StudentList,null);
+            ////
+            StudentListData testList=new StudentListData();
+            StudentUnit testStudent=new StudentUnit();
+            testStudent.setName("ASD");
+            testStudent.setEmail("email");
+            testStudent.setPhone("11111");
+            testStudent.setAddress("ccccc");
+            testList.add(testStudent);
+            updater.update(testList);
+            ////
+        } else if (id==R.id.nav_Event){
+            studentSelect=false;
+            eventSelect=true;
+            getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
+            controller.changeView(PanelController.Display.EventList,null);
+        }else if (id==R.id.nav_Profile){
 
+        } else if (id==R.id.nav_Setting){
 
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        }else if (id==R.id.nav_share){
 
         }
- */
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

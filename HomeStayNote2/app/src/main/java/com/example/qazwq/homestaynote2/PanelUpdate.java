@@ -1,8 +1,10 @@
 package com.example.qazwq.homestaynote2;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -30,9 +32,9 @@ public class PanelUpdate {
 
     static PanelUpdate self;
     PanelController panelController;
-    Activity panel;
+    MainPanel panel;
 
-    public static PanelUpdate getStaticUpdate(PanelController panelController, Activity panel){
+    public static PanelUpdate getStaticUpdate(PanelController panelController, MainPanel panel){
         self =new PanelUpdate();
         self.panelController=panelController;
         self.panel=panel;
@@ -42,10 +44,16 @@ public class PanelUpdate {
         LinearLayout view=panelController.findViewById(PanelController.Display.EventList,R.id.event_lis_view);
         view.removeAllViewsInLayout();
         for(int i=0;i<eventList.length;i++) {
-            EventListData.DataPackage data = eventList.get(i);
+            final EventListData.DataPackage data = eventList.get(i);//may error
             Toolbar toolbar = new Toolbar(panel);
             toolbar.setTitle(data.name);
-            toolbar.setOnClickListener(data.listnner);
+            toolbar.setClickable(true);
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                        panel.currentEvent=data.unit;
+                }
+            });
             view.addView(toolbar);
         }
     }
@@ -56,10 +64,25 @@ public class PanelUpdate {
         LinearLayout view=panelController.findViewById(PanelController.Display.StudentList,R.id.student_list_view);
         view.removeAllViewsInLayout();
         for(int i=0;i<studentListData.length;i++) {
-            StudentListData.DataPackage data = studentListData.get(i);
-            Toolbar toolbar = new Toolbar(panel);
-            toolbar.setTitle(data.name);
-            toolbar.setOnClickListener(data.listnner);
+            Toast.makeText(panel, "加载"+i,
+                    Toast.LENGTH_SHORT).show();
+            final StudentListData.DataPackage studentData = studentListData.get(i);
+            final Toolbar toolbar = new Toolbar(panel);
+            toolbar.setBackgroundColor(Color.BLACK);
+            toolbar.setVisibility(View.VISIBLE);
+            toolbar.setTitle(studentData.name);
+            toolbar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    panel.currentStudent=studentData.unit;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(panel);
+                    toolbar.setBackgroundColor(Color.BLUE);
+                    builder.setTitle("Student Info");
+                    builder.setMessage(studentData.description);
+                    builder.create();
+                    builder.show();
+                }
+            });
             view.addView(toolbar);
         }
     }

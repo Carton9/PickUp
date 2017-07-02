@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:title="Add"
-        android:id="@+id/general_add" />
-    <item android:title="Delete"
-        android:id="@+id/general_delete" />
+    <item android:title="Add Student"
+        android:id="@+id/add_student" />
+    <item android:title="Add Event"
+        android:id="@+id/add_event" />
+    <item android:title="Delete Student"
+    android:id="@+id/delete_student" />
+    <item android:title="Delete Event"
+        android:id="@+id/delete_event" />
+    <item android:title="Edit Student"
+        android:id="@+id/edit_student" />
+    <item android:title="Edit Event"
+        android:id="@+id/edit_event" />
+    <item android:title="Info"
+        android:id="@+id/info" />
 </menu>
