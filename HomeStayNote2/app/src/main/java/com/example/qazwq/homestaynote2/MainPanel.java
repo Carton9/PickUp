@@ -125,6 +125,10 @@ public class MainPanel extends AppCompatActivity
             controller.changeView(PanelController.Display.StudentSignIn,null);
             return true;
         }
+        if (id == R.id.edit_event) {
+            controller.changeView(PanelController.Display.EventSetting,null);
+            return true;
+        }
         /*noinspection SimplifiableIfStatement
 
         if (id == R.id.action_settings) {
@@ -189,7 +193,7 @@ public class MainPanel extends AppCompatActivity
             getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
             controller.changeView(PanelController.Display.EventList,null);
         }else if (id==R.id.nav_Profile){
-
+            controller.changeView(PanelController.Display.UserProfile,null);
         } else if (id==R.id.nav_Setting){
 
         }else if (id==R.id.nav_share){
