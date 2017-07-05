@@ -22,19 +22,26 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.File;
+
 public class MainPanel extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     MainPanel self=this;
     final int EVENTLOCATION=8765432;
     final int STUDENTLOCATION=876545;
+    final int GOOGLESIGNIN=MyGoogleLockIn.GOOGLESIGNIN;
     PanelController controller;
     PanelUpdate updater;
     Boolean eventSelect;
     Boolean studentSelect;
-    StudentUnit currentStudent;
-    StudentListData currentStudentList;
-    EventUnit currentEvent;
-    EventListData currentEventList;
+    StudentUnit currentStudent=null;
+    StudentListData currentStudentList=null;
+    EventUnit currentEvent=null;
+
+    EventListData currentUserEventList=null;
+    MyGoogleLockIn googleLockIn;
+    String bDir="student_data";
+    String bFileName="studentlist.list";
     public class LocationListener<T extends InforomationUnit> implements View.OnClickListener{
         T resultData;
         PlacePicker.IntentBuilder builder;
@@ -71,6 +78,16 @@ public class MainPanel extends AppCompatActivity
         setContentView(R.layout.activity_main_panel);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if(SDCardHelper.isSDCardMounted()&&SDCardHelper.getSDCardFreeSize()<50){
+            Toast.makeText(getApplicationContext(), "Not enough space",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        currentStudentList=SDCardHelper.loadFileFromSDCard(SDCardHelper.getSDCardBaseDir()+ File.separator+bDir+ File.separator+bFileName);
+        if(currentStudentList==null){
+            currentStudentList=new StudentListData();
+        }
+        googleLockIn=new MyGoogleLockIn(this);
         studentSelect=false;
         eventSelect=false;
          controller=PanelController.getStaticController(new View[]{
@@ -195,16 +212,22 @@ public class MainPanel extends AppCompatActivity
         }else if (id==R.id.nav_Profile){
             controller.changeView(PanelController.Display.UserProfile,null);
         } else if (id==R.id.nav_Setting){
-
+            Toast.makeText(getApplicationContext(), "Not yet prepare",
+                    Toast.LENGTH_SHORT).show();
         }else if (id==R.id.nav_share){
-
+            Toast.makeText(getApplicationContext(), "Not yet prepare",
+                    Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    @Override
+    protected void onDestroy(){
+        SDCardHelper.saveFileToSDCardCustomDir(currentStudentList,bDir,bFileName);
+        super.onDestroy();
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode==EVENTLOCATION||requestCode==STUDENTLOCATION){
@@ -217,6 +240,6 @@ public class MainPanel extends AppCompatActivity
                     currentStudent.setLocation(location);
             }
         }
-
+        googleLockIn.onActivityResult(requestCode,resultCode,data);
     }
 }
