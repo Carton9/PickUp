@@ -226,6 +226,7 @@ public class SDCardHelper {
             e.printStackTrace();
         } finally {
             try {
+                if(ois==null)return null;
                 ois.close();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -14,18 +14,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainPanel"
-
             android:label="@string/title_activity_main_panel"
-            android:theme="@style/AppTheme.NoActionBar" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
 
-        </activity>
         <service
             android:name=".MyService"
             android:enabled="true"
@@ -35,11 +33,17 @@
         <activity android:name=".StudentSignIn" />
         <activity android:name=".StudentList" />
         <activity android:name=".EventSetting" />
+        <activity android:name=".EventList" />
 
-        <activity android:name=".EventList"></activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDq-ClyOQ2BTv-ok-dYbiFafe5aAtHKJ5Y"/>
+            android:value="AIzaSyDq-ClyOQ2BTv-ok-dYbiFafe5aAtHKJ5Y" />
+
+        <activity
+            android:name=".PickUpMode"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_pick_up_mode"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

@@ -21,7 +21,7 @@ public class PanelController {
     ArrayList dataList=new ArrayList();
     ArrayList<Display> viewOpenList=new ArrayList<Display>();
     enum Display{EventList,EventSetting,StudentList,StudentSignIn,UserProfile,StudentProfile};
-    private void inputView(View eventList,View eventSetting,View studentList,View studentSignIn,View userProfile, View studentProfile){
+    private void inputView(View eventList,View eventSetting,View studentList,View studentSignIn){
         this.eventList=eventList;
         this.eventSetting=eventSetting;
         this.studentList=studentList;
@@ -32,12 +32,12 @@ public class PanelController {
     public static PanelController getStaticController(View[] viewList){
         controller =new PanelController();
         controller.viewList=viewList;
-        controller.inputView(viewList[0],viewList[1],viewList[2],viewList[3],viewList[4],viewList[5]);
+        controller.inputView(viewList[0],viewList[1],viewList[2],viewList[3]);
         return controller;
     }
-    public static PanelController getStaticController(View eventList,View eventSetting,View studentList,View studentSignIn,View userProfile, View studentProfile){
+    public static PanelController getStaticController(View eventList,View eventSetting,View studentList,View studentSignIn){
         controller =new PanelController();
-        controller.inputView(eventList,eventSetting,studentList,studentSignIn,userProfile,studentProfile);
+        controller.inputView(eventList,eventSetting,studentList,studentSignIn);
         return controller;
     }
     private void setDisplay(Display display){

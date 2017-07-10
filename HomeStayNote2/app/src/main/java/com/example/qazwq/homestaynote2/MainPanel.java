@@ -90,7 +90,7 @@ public class MainPanel extends AppCompatActivity
         googleLockIn=new MyGoogleLockIn(this);
         studentSelect=false;
         eventSelect=false;
-         controller=PanelController.getStaticController(new View[]{
+        controller=PanelController.getStaticController(new View[]{
                 (View)findViewById(R.id.event_list),
                 (View)findViewById(R.id.event_setting),
                 (View)findViewById(R.id.student_list),
@@ -209,8 +209,10 @@ public class MainPanel extends AppCompatActivity
             eventSelect=true;
             getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
             controller.changeView(PanelController.Display.EventList,null);
-        }else if (id==R.id.nav_Profile){
-            controller.changeView(PanelController.Display.UserProfile,null);
+        }else if (id==R.id.nav_pick_up){
+            controller.changeView(PanelController.Display.StudentList,null);
+            Intent pickUpMode=new Intent(this,PickUpMode.class);
+            startActivity(pickUpMode);
         } else if (id==R.id.nav_Setting){
             Toast.makeText(getApplicationContext(), "Not yet prepare",
                     Toast.LENGTH_SHORT).show();
