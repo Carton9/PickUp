@@ -14,12 +14,37 @@ import java.util.concurrent.TimeUnit;
 
 public class EventUnit extends InforomationUnit implements Serializable {
     enum RepeartType{ByWeek,ByMonth,ByYear};
-    enum Weeks{Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday};
+    public enum Weeks{
+        Monday(2),
+        Tuesday(3),
+        Wednesday(4),
+        Thursday(5),
+        Friday(6),
+        Saturday(7),
+        Sunday(1);
+        private int nCode;
+        Weeks(int _nCode) {
+            this.nCode = _nCode;
+        }
+        public int get(){
+           return  nCode;
+        }
+    };
     int[] startTime=new int[2];
     int[] startDate=new int[3];//Day,Month,Year
     Weeks startWeek;
     RepeartType type;
     static int[] advancetTime=new int[2];
+    public static Weeks weekGenerate(int input){
+        Weeks output;
+        for (Weeks we : Weeks.values()) {
+            if(we.get()==input){
+                output=we;
+                return output;
+            }
+        }
+        return null;
+    }
     public EventUnit(){typeCode = EventUnitID;}
     public EventUnit setStartTime(int hour,int minate){
         startTime[0]=hour;
@@ -46,20 +71,10 @@ public class EventUnit extends InforomationUnit implements Serializable {
         }
         return false;
     }
-    public static void setAdvancetTime(int hour,int minate){
-        advancetTime[0]=hour;
-        advancetTime[1]=minate;
-    }
     public boolean startNotifation(int[] time){
         if(time.length<2)return false;
-        int[] currentTime=new int[2];
-        currentTime[0]=(advancetTime[0]+time[0])%24;
-        if(advancetTime[1]+time[1]>60){
-            currentTime[0]+=1;
-        }
-        currentTime[1]=(advancetTime[1]+time[1])%60;
-        if(currentTime[0]>=startTime[0]){
-            if(currentTime[1]>=startTime[1])return true;
+        if(time[0]>=startTime[0]){
+            if(time[1]>=startTime[1])return true;
         }
         return false;
     }

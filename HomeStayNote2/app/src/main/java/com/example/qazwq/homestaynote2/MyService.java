@@ -36,10 +36,16 @@ public class MyService extends Service {
     NotificationManager mNotificationManager;
     LocationManager locationManager;
     NotificationCompat.Builder mBuilder;
+    Location currentLocation=null;
     final int iD = 9982;
     LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
+            currentLocation=location;
+            if(locationRequest){
+                sendMessageToActivity(replyLocation,SERVICE_GETLOCATION,currentLocation);
+                locationRequest=false;
+            }
             if(isStart){
                 act(location);
             }
@@ -54,6 +60,7 @@ public class MyService extends Service {
             if(!checkPermission()){
                 self.stopSelf();
             }
+            currentLocation=locationManager.getLastKnownLocation(provider);
             if(isStart){
                 act(locationManager.getLastKnownLocation(provider));
             }
@@ -68,11 +75,13 @@ public class MyService extends Service {
     MyService self = this;
     public final static int SERVICE_STOP = 23256;
     public final static int SERVICE_START = 23257;
+    public final static int SERVICE_GETLOCATION = 23258;
     public final static int SERVICE_LIST_ADD = 20011;
     public final static int SERVICE_LIST_GET = 20012;
     public final static int SERVICE_LIST_CLEAR = 20013;
     public final static int SERVICE_LIST_REMOVE = 20014;
-
+    boolean locationRequest=false;
+    Messenger replyLocation=null;
     class BackGroundHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -93,6 +102,14 @@ public class MyService extends Service {
                     sendMessageToActivity(msg.replyTo,SERVICE_LIST_ADD,"OK");
                 }
                     break;
+                case SERVICE_GETLOCATION:{
+                    if(currentLocation==null){
+                        locationRequest=true;
+                        replyLocation=msg.replyTo;
+                    }
+                    else sendMessageToActivity(msg.replyTo,SERVICE_GETLOCATION,currentLocation);
+                }
+                break;
                 case SERVICE_LIST_GET: {
                     ArrayList<EventGenerter.EventBundle> newEventBundles=new ArrayList<EventGenerter.EventBundle>();
                     for(int i=0;i<eventBundles.size();i++){
@@ -282,14 +299,20 @@ public class MyService extends Service {
         }
     }
     public void act(Location location){
-        if(MapMath.GetDistance(location.getLongitude(),location.getLatitude(),ln,la)<800){
+        /*if(MapMath.GetDistance(location.getLongitude(),location.getLatitude(),ln,la)<800){
             sendText("You will arrive school");
             sendMessege();
             stopSelf();
         }
         else{
             sendText("Distance: "+MapMath.GetDistance(location.getLongitude(),location.getLatitude(),ln,la)+" meter");
+        }*/
+
+        for(EventGenerter.EventBundle eventBundle:eventBundles){
+
+
         }
+
     }
     public PendingIntent getDefalutIntent(int flags){
         PendingIntent pendingIntent= PendingIntent.getActivity(this, 1, new Intent(), flags);
@@ -299,7 +322,6 @@ public class MyService extends Service {
         Message msg = Message.obtain();
         msg.what = code;
         msg.obj = obj;
-
         try {
             mMessenger.send(msg);
         } catch (Exception e) {
