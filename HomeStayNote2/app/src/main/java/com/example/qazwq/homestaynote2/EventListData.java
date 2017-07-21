@@ -24,7 +24,7 @@ public class EventListData implements Serializable {
         names=new ArrayList<String>();
         length=0;
     }
-    public void add(EventUnit eventUnit,View.OnClickListener onClickListener,String name){
+    public void add(EventUnit eventUnit,String name){
         DataList.add(eventUnit);
         names.add(name);
         length++;

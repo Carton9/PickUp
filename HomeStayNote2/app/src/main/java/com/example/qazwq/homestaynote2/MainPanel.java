@@ -210,7 +210,7 @@ public class MainPanel extends AppCompatActivity
             getWindow().invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL);
             controller.changeView(PanelController.Display.EventList,null);
         }else if (id==R.id.nav_pick_up){
-            controller.changeView(PanelController.Display.StudentList,null);
+            //controller.changeView(PanelController.Display.StudentList,null);
             Intent pickUpMode=new Intent(this,PickUpMode.class);
             startActivity(pickUpMode);
         } else if (id==R.id.nav_Setting){

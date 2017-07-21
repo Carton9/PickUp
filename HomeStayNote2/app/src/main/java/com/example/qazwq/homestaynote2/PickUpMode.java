@@ -1,12 +1,17 @@
 package com.example.qazwq.homestaynote2;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -31,7 +36,8 @@ public class PickUpMode extends AppCompatActivity {
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
-    private View mContentView;
+    public TextView mContentView;
+    EventGenerter generter;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -82,16 +88,23 @@ public class PickUpMode extends AppCompatActivity {
             return false;
         }
     };
-
+    static final String notificationData[]={"DATE_UPDATE","EVENT_PRECESSING","EVENT_FINISH","EVENT_ERROR"};
+    static final String delegrateData[]={"DATE_INFO","EVENT_INFO"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Bundle extras = getIntent().getExtras();
+        generter=new EventGenerter(this);
+        if(extras != null){
+            boolean notifications[]=new boolean[notificationData.length];
+            for(int i=0;i<notificationData.length;i++){
+                notifications[i]=extras.getBoolean(notificationData[i]);
+            }
+        }
         setContentView(R.layout.activity_pick_up_mode);
-
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
-        mContentView = findViewById(R.id.fullscreen_content);
+        mContentView = (TextView) findViewById(R.id.fullscreen_content);
 
 
         // Set up the user interaction to manually show or hide the system UI.

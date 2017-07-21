@@ -2,6 +2,7 @@ package com.example.qazwq.homestaynote2;
 
 import android.app.Service;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.location.Location;
@@ -42,20 +43,18 @@ public class EventGenerter {
     Location currentLocation=null;
     ArrayList<EventGenerter.EventBundle> runningList=new ArrayList<EventGenerter.EventBundle>();
     static EventGenerter defultGenerter;
-    AppCompatActivity panel;
+    Context panel;
     static boolean isAlive=false;
-    public static EventGenerter  getDefultGenerter(AppCompatActivity panel){
-        if(!isAlive){
-            defultGenerter=new EventGenerter();
-        }
-        defultGenerter.panel=panel;
+    public static EventGenerter  getDefultGenerter(PickUpMode panel){
         return defultGenerter;
     }
-    EventGenerter(){
+    public EventGenerter(Context panel){
+        this.panel=panel;
         receiver = new Messenger(new ForendHandler());
         bindMyService();
     }
     public boolean launchEvent(EventUnit unit){
+        bindMyService();
         sendMessageToService(SERVICE_GETLOCATION,null);
         Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -168,6 +167,7 @@ public class EventGenerter {
             }
         };
         Intent intent = new Intent(panel, MyService.class);
+        panel.startService(intent);
         panel.bindService(intent, sc, Service.BIND_AUTO_CREATE);
         sendMessageToService(SERVICE_GETLOCATION,null);
     }

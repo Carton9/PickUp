@@ -69,7 +69,7 @@ public class MyService extends Service {
 
         @Override
         public void onProviderDisabled(String s) {
-            sendText("无法检测到GPS");
+            sendText("GPS Error");
         }
     };
     MyService self = this;
@@ -85,7 +85,7 @@ public class MyService extends Service {
     class BackGroundHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what) {
+            switch (msg.what){
                 case SERVICE_STOP: {
                     isStart=false;
                     sendMessageToActivity(msg.replyTo,SERVICE_STOP,"Stop");
