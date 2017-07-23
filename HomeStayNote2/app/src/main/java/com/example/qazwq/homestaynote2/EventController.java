@@ -20,6 +20,7 @@ public class EventController extends Service {
     public final static int CONTROLER_GETSTATE = 5523;
     boolean isAlive;
     private String flag;
+    int state;//0: running 1: wait 2: finish
     class controler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -37,8 +38,13 @@ public class EventController extends Service {
                 }
                 return;
             }
-            else if(msg.what==CONTROLER_STOP){
+            else if(msg.what==CONTROLER_FINISH){
+                state=0;
                 stopSelf();
+                return;
+            }
+            else if(msg.what==CONTROLER_GETSTATE){
+                sendMessageToActivity(msg.replyTo,CONTROLER_GETSTATE,new Integer(state));
                 return;
             }
             super.handleMessage(msg);
@@ -53,18 +59,20 @@ public class EventController extends Service {
         synchronized (flag) {
             flag="T";
         }
+        state=0;
         new TimerChecker().start();
     }
     public class TimerChecker extends Thread{
         public void run(){
             while(true){
                 synchronized (flag) {
-                    flag.indexOf("F");
-                    try {
-                        flag.wait();
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    if(flag.indexOf("F")!=-1){
+                        try {
+                            flag.wait();
+                            state=2;
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
                 if(SDCardHelper.isSDCardMounted()){
@@ -92,5 +100,15 @@ public class EventController extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return mMessenger.getBinder();
+    }
+    private void sendMessageToActivity(Messenger mMessenger,int code,Object obj) {
+        Message msg = Message.obtain();
+        msg.what = code;
+        msg.obj = obj;
+        try {
+            mMessenger.send(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

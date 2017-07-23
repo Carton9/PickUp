@@ -1,7 +1,10 @@
 package com.example.qazwq.homestaynote2;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +25,13 @@ public class PickUpMode extends AppCompatActivity {
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
+    public class StateUpdater extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String data = intent.getStringExtra("all_info");
+            mContentView.setText(data);
+        }
+    }
     private static final boolean AUTO_HIDE = true;
 
     /**
@@ -88,23 +98,15 @@ public class PickUpMode extends AppCompatActivity {
             return false;
         }
     };
-    static final String notificationData[]={"DATE_UPDATE","EVENT_PRECESSING","EVENT_FINISH","EVENT_ERROR"};
-    static final String delegrateData[]={"DATE_INFO","EVENT_INFO"};
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void  onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle extras = getIntent().getExtras();
-        generter=new EventGenerter(this);
-        if(extras != null){
-            boolean notifications[]=new boolean[notificationData.length];
-            for(int i=0;i<notificationData.length;i++){
-                notifications[i]=extras.getBoolean(notificationData[i]);
-            }
-        }
         setContentView(R.layout.activity_pick_up_mode);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = (TextView) findViewById(R.id.fullscreen_content);
+        registerReceiver(new StateUpdater(),new IntentFilter("com.example.qazwq.homestaynote2.PICKUP_UNDATE"));
 
 
         // Set up the user interaction to manually show or hide the system UI.

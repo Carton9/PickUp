@@ -30,6 +30,7 @@ public class EventUnit extends InforomationUnit implements Serializable {
            return  nCode;
         }
     };
+    String NotePhone;
     int[] startTime=new int[2];
     int[] startDate=new int[3];//Day,Month,Year
     Weeks startWeek;
@@ -45,7 +46,10 @@ public class EventUnit extends InforomationUnit implements Serializable {
         }
         return null;
     }
-    public EventUnit(){typeCode = EventUnitID;}
+    public EventUnit(String NotePhone){
+        typeCode = EventUnitID;
+        this.NotePhone=NotePhone;
+    }
     public EventUnit setStartTime(int hour,int minate){
         startTime[0]=hour;
         startTime[1]=minate;

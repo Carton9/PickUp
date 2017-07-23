@@ -281,7 +281,6 @@ public class MyService extends Service {
     }
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
         return mMessenger.getBinder();
     }
     public void sendText(String text){
@@ -289,29 +288,38 @@ public class MyService extends Service {
         mNotificationManager.notify(iD, mBuilder.build());
         delay(100);
     }
-    public void sendMessege(){
+    public void sendMessege(String phoneNumber){
         SmsManager smsm = SmsManager.getDefault();
         try {
             PendingIntent pi = PendingIntent.getBroadcast(this, 0, new Intent(), 0);
-            smsm.sendTextMessage("********", null, "住家将到达", null, null);
+            smsm.sendTextMessage(phoneNumber, null, "Arrive in 3 Min", null, null);
         } catch (Exception e) {
             Log.e("SmsSending", "SendException", e);
         }
     }
     public void act(Location location){
-        /*if(MapMath.GetDistance(location.getLongitude(),location.getLatitude(),ln,la)<800){
+        /*
             sendText("You will arrive school");
             sendMessege();
             stopSelf();
         }
         else{
-            sendText("Distance: "+MapMath.GetDistance(location.getLongitude(),location.getLatitude(),ln,la)+" meter");
+            sendText("Distance: "++" meter");
         }*/
-
+        Intent i = new Intent("com.example.qazwq.homestaynote2.PICKUP_UNDATE");
+        StringBuilder builder=new StringBuilder();
         for(EventGenerter.EventBundle eventBundle:eventBundles){
-
-
+            if(MapMath.GetDistance(location.getLongitude(),location.getLatitude(),eventBundle.ln,eventBundle.la)<800){
+                eventBundles.remove(eventBundle);
+                builder.append(eventBundle.unit.getName()+"Finish");
+                sendMessege(eventBundle.unit.NotePhone);
+            }
+            else
+            builder.append(eventBundle.unit.getName()+" distence: "+
+                    MapMath.GetDistance(location.getLongitude(),location.getLatitude(),eventBundle.ln,eventBundle.la));
         }
+        i.putExtra("all_info",builder.toString());
+        sendBroadcast(i);
 
     }
     public PendingIntent getDefalutIntent(int flags){
